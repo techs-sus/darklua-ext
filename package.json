@@ -1,0 +1,74 @@
+{
+	"name": "darklua-cooking",
+	"displayName": "Darklua utilities",
+	"description": "bundle files with darklua",
+	"publisher": "techs-sus",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/techs-sus/darklua-cooking.git"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "darklua-cooking.installDarklua",
+				"title": "Darklua: Install"
+			},
+			{
+				"command": "darklua-cooking.bundle",
+				"title": "Darklua: Bundle + copy active document"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Darklua",
+				"properties": {
+					"darklua.processing.input": {
+						"type": "string",
+						"default": "src",
+						"description": "The input directory for processing."
+					},
+					"darklua.processing.output": {
+						"type": "string",
+						"default": "out",
+						"description": "The output directory for processing."
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run esbuild-base -- --minify",
+		"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+		"compile": "pnpm tsc -p ./",
+		"watch": "pnpm tsc -watch -p ./",
+		"pretest": "pnpm run compile && pnpm run lint",
+		"lint": "pnpm eslint src --ext ts",
+		"test": "pnpm vscode-test",
+		"package": "pnpm vsce package --no-dependencies"
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.6",
+		"@types/node": "18.x",
+		"@types/vscode": "^1.85.0",
+		"@typescript-eslint/eslint-plugin": "^6.15.0",
+		"@typescript-eslint/parser": "^6.15.0",
+		"@vscode/test-cli": "^0.0.4",
+		"@vscode/test-electron": "^2.3.8",
+		"eslint": "^8.56.0",
+		"typescript": "^5.3.3"
+	},
+	"dependencies": {
+		"@types/which": "^3.0.3",
+		"esbuild": "^0.19.11",
+		"which": "^4.0.0"
+	}
+}
